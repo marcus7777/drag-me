@@ -1,0 +1,13 @@
+{
+  "name": "drag-me",
+  "version": "1.0.0",
+  "description": "adds events for drag actions up down left and right",
+  "main": "drag-me.html",
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "dependencies": {
+    "polymer": "*"
+  }
+}
