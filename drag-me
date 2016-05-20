@@ -1,0 +1,56 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<!--
+`<drag-me on-push-up="promote" on-push-down="bin" on-push-left="pushToStart" on-push-right="pushToEnd" ></drag-me>` adds events for drag actions up down left and right
+@demo demo.html
+-->
+<dom-module id="drag-me">
+  <template>
+    <style>:host {display:inline-block}
+      #dragme {
+        display:inline-block;
+      }
+    </style>
+    <div id="dragme"><content></content></div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'drag-me',
+      listeners: {
+        'dragme.track': 'handleTrack'
+      },
+      handleTrack: function(e) {
+        switch(e.detail.state) {
+          case 'track':
+            if (!this.startY) {
+              this.startY = e.detail.y
+              this.startX = e.detail.x
+            } else {
+              this.v = (((this.startY-e.detail.y)*(this.startY-e.detail.y)) > ((this.startX-e.detail.x)*(this.startX-e.detail.x)))
+              this.up = (this.startY - e.detail.y) > 0
+              this.left = (this.startX - e.detail.x) > 0
+            }
+            break;
+          case 'end':
+            if (this.v) {
+              if (this.up) {
+                this.fire('push-up')
+              } else {
+                this.fire('push-down')
+              }
+            } else {
+              if (this.left) {
+                this.fire('push-left')
+              } else {
+                this.fire('push-right')
+              }
+            }
+
+            this.startY = false
+            this.startX = false
+            break
+        }
+      }
+    });
+  </script>
+</dom-module>
