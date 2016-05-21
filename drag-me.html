@@ -23,8 +23,8 @@
       handleTrack: function(e) {
         if (e.detail.state === 'end') {
           this.v = (e.detail.dy*e.detail.dy) > (e.detail.dx*e.detail.dx)
-          this.up = e.detail.dy > 0
-          this.left = e.detail.dx > 0
+          this.up = e.detail.dy < 0
+          this.left = e.detail.dx < 0
           if (this.v) {
             if (this.up) {
               this.fire('push-up')
