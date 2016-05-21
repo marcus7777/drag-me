@@ -21,35 +21,23 @@
         'dragme.track': 'handleTrack'
       },
       handleTrack: function(e) {
-        switch(e.detail.state) {
-          case 'track':
-            if (!this.startY) {
-              this.startY = e.detail.y
-              this.startX = e.detail.x
+        if (e.detail.state === 'end') {
+          this.v = (e.detail.dy*e.detail.dy) > (e.detail.dx*e.detail.dx)
+          this.up = e.detail.dy > 0
+          this.left = e.detail.dx > 0
+          if (this.v) {
+            if (this.up) {
+              this.fire('push-up')
             } else {
-              this.v = (((this.startY-e.detail.y)*(this.startY-e.detail.y)) > ((this.startX-e.detail.x)*(this.startX-e.detail.x)))
-              this.up = (this.startY - e.detail.y) > 0
-              this.left = (this.startX - e.detail.x) > 0
+              this.fire('push-down')
             }
-            break;
-          case 'end':
-            if (this.v) {
-              if (this.up) {
-                this.fire('push-up')
-              } else {
-                this.fire('push-down')
-              }
+          } else {
+            if (this.left) {
+              this.fire('push-left')
             } else {
-              if (this.left) {
-                this.fire('push-left')
-              } else {
-                this.fire('push-right')
-              }
+              this.fire('push-right')
             }
-
-            this.startY = false
-            this.startX = false
-            break
+          }
         }
       }
     });
