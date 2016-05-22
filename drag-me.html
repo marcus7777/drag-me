@@ -27,15 +27,15 @@
           this.left = e.detail.dx < 0
           if (this.v) {
             if (this.up) {
-              this.fire('push-up')
+              this.fire('push-up', {index: this.index})
             } else {
-              this.fire('push-down')
+              this.fire('push-down', {index: this.index})
             }
           } else {
             if (this.left) {
-              this.fire('push-left')
+              this.fire('push-left', {index: this.index})
             } else {
-              this.fire('push-right')
+              this.fire('push-right', {index: this.index})
             }
           }
         }
